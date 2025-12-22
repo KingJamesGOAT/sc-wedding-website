@@ -171,7 +171,7 @@ export default function RSVP() {
           {formData.attending !== 'no' && (
             <div className="space-y-6 pt-4 border-t border-neutral-100">
               <div className="space-y-2">
-                <Label htmlFor="guests">{t('rsvp.guests')} (Including you)</Label>
+                <Label htmlFor="guests">{t('rsvp.guests')} {t('rsvp.includingYou')}</Label>
                 <Select value={formData.guests} onValueChange={(value: string) => setFormData({ ...formData, guests: value })}>
                   <SelectTrigger className="w-full" disabled={isSubmitting}>
                     <SelectValue placeholder="Select number" />

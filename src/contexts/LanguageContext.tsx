@@ -15,7 +15,7 @@ const translations: Record<string, Record<Language, string>> = {
   'nav.home': { en: 'Home', fr: 'Accueil' },
   'nav.details': { en: 'Details', fr: 'Infos Pratiques' },
   'nav.rsvp': { en: 'RSVP', fr: 'RSVP' },
-  'nav.registry': { en: 'Registry', fr: 'Liste de mariage' },
+  'nav.registry': { en: 'Gifts', fr: 'Cadeaux' },
   'nav.venue': { en: 'Venue', fr: 'Lieux' },
   'nav.gallery': { en: 'Gallery', fr: 'Galerie' },
   'nav.contribute': { en: 'Contribute', fr: 'Contribuer' },
@@ -74,6 +74,7 @@ const translations: Record<string, Record<Language, string>> = {
   'rsvp.lastName': { en: 'Last Name', fr: 'Nom' },
   'rsvp.email': { en: 'Email Address', fr: 'Adresse e-mail' },
   'rsvp.guests': { en: 'Number of Guests', fr: "Nombre d'invités" },
+  'rsvp.includingYou': { en: '(Including you)', fr: '(Vous inclus)' },
   'rsvp.children': { 
     en: 'Number of Children', 
     fr: "Nombre d'enfants" 

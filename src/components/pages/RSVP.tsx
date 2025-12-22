@@ -13,28 +13,41 @@ export default function RSVP() {
     name: '',
     email: '',
     guests: '',
+    children: '',
     dietary: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Store RSVP data in localStorage (simulating Excel export)
-    const existingRSVPs = JSON.parse(localStorage.getItem('rsvpData') || '[]');
-    existingRSVPs.push({
-      ...formData,
-      timestamp: new Date().toISOString(),
-    });
-    localStorage.setItem('rsvpData', JSON.stringify(existingRSVPs));
+    try {
+      await fetch('https://script.google.com/macros/s/AKfycbz06IfaoPFh1kpwyfANLVt4YUPDBa6jODhf9AEufCUcAVWL_WVJNCtbscP5eTuakLHo/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setSubmitted(true);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setFormData({ name: '', email: '', guests: '', dietary: '' });
-      setSubmitted(false);
-    }, 3000);
+      // Since mode is no-cors, we get an opaque response.
+      // We assume success if no error was thrown.
+      setSubmitted(true);
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setFormData({ name: '', email: '', guests: '', children: '', dietary: '' });
+        setSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Ideally show an error message to user, but for now we follow instructions
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -69,6 +82,7 @@ export default function RSVP() {
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full"
+              disabled={isSubmitting}
             />
           </div>
 
@@ -81,13 +95,14 @@ export default function RSVP() {
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full"
+              disabled={isSubmitting}
             />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="guests">{t('rsvp.guests')}</Label>
-            <Select value={formData.guests} onValueChange={(value) => setFormData({ ...formData, guests: value })}>
-              <SelectTrigger className="w-full">
+            <Select value={formData.guests} onValueChange={(value: string) => setFormData({ ...formData, guests: value })}>
+              <SelectTrigger className="w-full" disabled={isSubmitting}>
                 <SelectValue placeholder="Select number" />
               </SelectTrigger>
               <SelectContent>
@@ -99,6 +114,19 @@ export default function RSVP() {
               </SelectContent>
             </Select>
           </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="children">{t('rsvp.children')}</Label>
+            <Input
+              id="children"
+              type="number"
+              min="0"
+              value={formData.children}
+              onChange={(e) => setFormData({ ...formData, children: e.target.value })}
+              className="w-full"
+              disabled={isSubmitting}
+            />
+          </div>
 
           <div className="space-y-2">
             <Label htmlFor="dietary">{t('rsvp.dietary')}</Label>
@@ -108,11 +136,12 @@ export default function RSVP() {
               onChange={(e) => setFormData({ ...formData, dietary: e.target.value })}
               className="w-full min-h-[100px]"
               placeholder="Vegetarian, vegan, allergies, etc."
+              disabled={isSubmitting}
             />
           </div>
 
-          <Button type="submit" className="w-full bg-neutral-900 hover:bg-neutral-800">
-            {t('rsvp.submit')}
+          <Button type="submit" className="w-full bg-neutral-900 hover:bg-neutral-800" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending...' : t('rsvp.submit')}
           </Button>
         </form>
       </div>

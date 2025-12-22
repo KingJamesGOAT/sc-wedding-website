@@ -66,6 +66,10 @@ const translations: Record<string, Record<Language, string>> = {
   'rsvp.name': { en: 'Full Name', fr: 'Nom complet' },
   'rsvp.email': { en: 'Email Address', fr: 'Adresse e-mail' },
   'rsvp.guests': { en: 'Number of Guests', fr: "Nombre d'invités" },
+  'rsvp.children': { 
+    en: 'Number of Children (included in total)', 
+    fr: "Nombre d'enfants (inclus dans le total)" 
+  },
   'rsvp.dietary': { en: 'Dietary Restrictions', fr: 'Restrictions alimentaires' },
   'rsvp.submit': { en: 'Submit RSVP', fr: 'Envoyer' },
   'rsvp.success': { 

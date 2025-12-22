@@ -106,7 +106,7 @@ const translations: Record<string, Record<Language, string>> = {
   'rsvp.aperoItemLabel': { en: 'What specifically?', fr: 'Quoi exactement ?' },
   'rsvp.aperoCustomLabel': { en: 'Please specify what you are bringing:', fr: 'Veuillez préciser ce que vous apportez :' },
   'rsvp.aperoChoiceCustom': { en: 'Something else (My own choice)', fr: 'Autre chose (Mon propre choix)' },
-  'rsvp.foodNote': { en: 'Please use this form to RSVP for the wedding AND to sign up for the Apero food.', fr: 'Utilisez ce formulaire pour répondre à l\'invitation ET pour vous inscrire au repas de l\'Apéro.' },
+  'rsvp.foodNote': { en: 'Please use this form to RSVP for the wedding. You can also optionally sign up to bring something for the Apero.', fr: 'Utilisez ce formulaire pour répondre à l\'invitation. Vous pouvez aussi, si vous le souhaitez, vous inscrire pour apporter quelque chose à l\'Apéro.' },
   
   // Registry
   'registry.title': { en: 'Gifts', fr: 'Cadeaux' },

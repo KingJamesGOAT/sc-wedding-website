@@ -28,7 +28,7 @@ export default function Gallery() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-6">
           {[...Array(6)].map((_, i) => (
             <motion.div
               key={i}

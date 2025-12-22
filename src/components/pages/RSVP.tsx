@@ -24,23 +24,21 @@ export default function RSVP() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Combine first and last name for the backend to maintain compatibility
-    const submissionData = {
-      name: `${formData.firstName} ${formData.lastName}`.trim(),
-      email: formData.email,
-      guests: formData.guests,
-      children: formData.children,
-      dietary: formData.dietary
-    };
-    
     try {
       await fetch('https://script.google.com/macros/s/AKfycbz06IfaoPFh1kpwyfANLVt4YUPDBa6jODhf9AEufCUcAVWL_WVJNCtbscP5eTuakLHo/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
-          'Content-Type': 'text/plain;charset=utf-8',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(submissionData),
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          guests: formData.guests,
+          children: formData.children,
+          dietary: formData.dietary
+        }),
       });
 
       // Since mode is no-cors, we get an opaque response.

@@ -9,25 +9,24 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { 
   Gift, CreditCard, Smartphone, Building2, Copy, Check, QrCode, Loader2, 
   DollarSign, ShoppingBag, ChefHat, Zap, Utensils, Bed, Coffee, Wine, 
-  Plane, Flower2, Palette, Speaker, Home
+  Plane, Flower2, Palette, Speaker, Home, Hammer, Bath, Scissors, Box
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 // Real data with realistic prices and 0 collected (fresh start)
 const GIFTS = [
-  { id: 'mixer', title: 'KitchenAid Artisan Mixer', description: 'Classic stand mixer for baking.', price: 450, collected: 0, suggestedAmounts: [50, 100, 200], icon: ChefHat },
-  { id: 'dyson', title: 'Dyson V15 Detect', description: 'Cordless vacuum cleaner.', price: 600, collected: 0, suggestedAmounts: [50, 100, 200], icon: Zap },
-  { id: 'lecreuset', title: 'Le Creuset Casserole 24cm', description: 'Cast iron signature pot.', price: 250, collected: 0, suggestedAmounts: [50, 100, 150], icon: Utensils },
-  { id: 'roborock', title: 'Roborock S8', description: 'Robot vacuum & mop.', price: 500, collected: 0, suggestedAmounts: [50, 100, 200], icon: Home },
-  { id: 'sonos', title: 'Sonos Era 100', description: 'Smart speaker for our living room.', price: 250, collected: 0, suggestedAmounts: [50, 100, 150], icon: Speaker },
-  { id: 'linens', title: 'Luxury Bed Linens', description: 'High-thread-count sheets.', price: 200, collected: 0, suggestedAmounts: [50, 100, 200], icon: Bed },
-  { id: 'dinner', title: 'Romantic Dinner', description: 'A special dinner on our honeymoon.', price: 200, collected: 0, suggestedAmounts: [50, 100, 200], icon: Utensils },
-  { id: 'spa', title: 'Couples Spa Day', description: 'Massage and relaxation.', price: 300, collected: 0, suggestedAmounts: [60, 120, 150], icon: Flower2 },
-  { id: 'coffee', title: 'Coffee Machine', description: 'Automatic espresso machine.', price: 500, collected: 0, suggestedAmounts: [50, 100, 250], icon: Coffee },
-  { id: 'wine', title: 'Wine Subscription', description: 'Monthly wine delivery.', price: 200, collected: 0, suggestedAmounts: [40, 80, 100], icon: Wine },
-  { id: 'plants', title: 'Indoor Plants', description: 'Greenery for our home.', price: 100, collected: 0, suggestedAmounts: [20, 50, 100], icon: Flower2 },
-  { id: 'art', title: 'Wall Art', description: 'Decor for the living room.', price: 300, collected: 0, suggestedAmounts: [50, 100, 150], icon: Palette },
-  { id: 'flight', title: 'Flight Upgrade', description: 'Upgrade for honeymoon flights.', price: 600, collected: 0, suggestedAmounts: [50, 150, 300], icon: Plane }
+  { id: 'towels', title: 'Bath Towel Set', description: 'A set of standard bath towels for the bathroom.', price: 60, collected: 0, suggestedAmounts: [40, 60], icon: Bath },
+  { id: 'knife', title: 'Kitchen Knife', description: 'A sharp chef\'s knife for daily cooking.', price: 70, collected: 0, suggestedAmounts: [40, 70], icon: ChefHat },
+  { id: 'pan', title: 'Frying Pan', description: 'A durable non-stick pan for cooking.', price: 60, collected: 0, suggestedAmounts: [40, 60], icon: Utensils },
+  { id: 'sheets', title: 'Bed Sheets', description: 'A standard set of sheets and pillowcases.', price: 80, collected: 0, suggestedAmounts: [50, 80], icon: Bed },
+  { id: 'blender', title: 'Hand Blender', description: 'For making soups and smoothies.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Zap },
+  { id: 'glasses', title: 'Wine Glasses', description: 'A set of 6 glasses for wine or water.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Wine },
+  { id: 'toolkit', title: 'Basic Tool Kit', description: 'Screwdrivers, hammer, and tape measure.', price: 70, collected: 0, suggestedAmounts: [40, 70], icon: Hammer },
+  { id: 'plates', title: 'Dinner Plates', description: 'A simple set of plates and bowls.', price: 90, collected: 0, suggestedAmounts: [50, 90], icon: Utensils },
+  { id: 'containers', title: 'Food Containers', description: 'Glass containers for storing leftovers.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Box },
+  { id: 'cuttingboard', title: 'Cutting Board', description: 'A solid wooden board for chopping food.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Utensils },
+  { id: 'grinder', title: 'Coffee Grinder', description: 'Small machine to grind coffee beans.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Coffee },
+  { id: 'iron', title: 'Iron', description: 'Standard steam iron for clothes.', price: 60, collected: 0, suggestedAmounts: [40, 60], icon: Zap }
 ];
 
 export default function Registry() {

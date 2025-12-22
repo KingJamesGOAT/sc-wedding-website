@@ -7,9 +7,9 @@ import { Textarea } from '../ui/textarea';
 import { Progress } from '../ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '../ui/dialog';
 import { 
-  Gift, CreditCard, Smartphone, Building2, Copy, Check, Loader2, 
+  Smartphone, Building2, Copy, Check, Loader2, 
   DollarSign, ShoppingBag, ChefHat, Zap, Utensils, Bed, Coffee, Wine, 
-  Plane, Flower2, Palette, Speaker, Home, Hammer, Bath, Scissors, Box
+  Hammer, Bath, Box
 } from 'lucide-react';
 import { toast } from 'sonner';
 

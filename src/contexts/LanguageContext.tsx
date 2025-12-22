@@ -93,7 +93,7 @@ const translations: Record<string, Record<Language, string>> = {
   },
   
   // Registry
-  'registry.title': { en: 'Gift Registry', fr: 'Liste de mariage' },
+  'registry.title': { en: 'Gifts', fr: 'Cadeaux' },
   'registry.intro': {
     en: "Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a present, we've put together a small wish list.",
     fr: "Votre présence à notre mariage est le plus beau des cadeaux. Si vous souhaitez nous offrir quelque chose, nous avons préparé une petite liste."
@@ -109,7 +109,7 @@ const translations: Record<string, Record<Language, string>> = {
   // Venue
   'venue.title': { en: 'Venue Information', fr: 'Lieux' },
   'venue.ceremony': { en: 'Ceremony', fr: 'Cérémonie' },
-  'venue.reception': { en: 'Reception', fr: 'Réception' },
+  'venue.reception': { en: 'Apéro', fr: 'Apéro' },
   'venue.directions': { en: 'Get Directions', fr: 'Itinéraire' },
   'venue.ceremonyTime': { en: 'June 27, 2026 at 14:00', fr: '27 juin 2026 à 14h00' },
   'venue.ceremonyNote': {
@@ -117,8 +117,8 @@ const translations: Record<string, Record<Language, string>> = {
     fr: 'La cérémonie débutera à 14h00 précises (merci d\'arriver 10 minutes en avance).'
   },
   'venue.receptionTime': {
-    en: 'Reception to follow at 5:00 PM',
-    fr: 'Réception à suivre vers 17h00'
+    en: 'Apéro to follow at 16:00',
+    fr: 'Apéro à suivre à 16h00'
   },
   'venue.receptionNote': {
     en: 'Dinner, drinks, and dancing will be at this location.',

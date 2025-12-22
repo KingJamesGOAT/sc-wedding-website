@@ -110,7 +110,7 @@ export default function RSVP() {
             <Label className="text-lg font-medium">{t('rsvp.attending')}</Label>
             <RadioGroup 
               value={formData.attending} 
-              onValueChange={(value) => setFormData({ ...formData, attending: value })}
+              onValueChange={(value: string) => setFormData({ ...formData, attending: value })}
               className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-6"
             >
               <div className="flex items-center space-x-2">
@@ -171,7 +171,7 @@ export default function RSVP() {
           {formData.attending !== 'no' && (
             <div className="space-y-6 pt-4 border-t border-neutral-100">
               <div className="space-y-2">
-                <Label htmlFor="guests">{t('rsvp.guests')} (Excluding you)</Label>
+                <Label htmlFor="guests">{t('rsvp.guests')} (Including you)</Label>
                 <Select value={formData.guests} onValueChange={(value: string) => setFormData({ ...formData, guests: value })}>
                   <SelectTrigger className="w-full" disabled={isSubmitting}>
                     <SelectValue placeholder="Select number" />

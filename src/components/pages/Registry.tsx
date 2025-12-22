@@ -15,18 +15,18 @@ import { toast } from 'sonner';
 
 // Real data with realistic prices and 0 collected (fresh start)
 const INITIAL_GIFTS = [
-  { id: 'towels', title: 'Bath Towel Set', description: 'A set of standard bath towels for the bathroom.', price: 60, collected: 0, suggestedAmounts: [40, 60], icon: Bath },
-  { id: 'knife', title: 'Kitchen Knife', description: 'A sharp chef\'s knife for daily cooking.', price: 70, collected: 0, suggestedAmounts: [40, 70], icon: ChefHat },
-  { id: 'pan', title: 'Frying Pan', description: 'A durable non-stick pan for cooking.', price: 60, collected: 0, suggestedAmounts: [40, 60], icon: Utensils },
-  { id: 'sheets', title: 'Bed Sheets', description: 'A standard set of sheets and pillowcases.', price: 80, collected: 0, suggestedAmounts: [50, 80], icon: Bed },
-  { id: 'blender', title: 'Hand Blender', description: 'For making soups and smoothies.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Zap },
-  { id: 'glasses', title: 'Wine Glasses', description: 'A set of 6 glasses for wine or water.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Wine },
-  { id: 'toolkit', title: 'Basic Tool Kit', description: 'Screwdrivers, hammer, and tape measure.', price: 70, collected: 0, suggestedAmounts: [40, 70], icon: Hammer },
-  { id: 'plates', title: 'Dinner Plates', description: 'A simple set of plates and bowls.', price: 90, collected: 0, suggestedAmounts: [50, 90], icon: Utensils },
-  { id: 'containers', title: 'Food Containers', description: 'Glass containers for storing leftovers.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Box },
-  { id: 'cuttingboard', title: 'Cutting Board', description: 'A solid wooden board for chopping food.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Utensils },
-  { id: 'grinder', title: 'Coffee Grinder', description: 'Small machine to grind coffee beans.', price: 50, collected: 0, suggestedAmounts: [30, 50], icon: Coffee },
-  { id: 'iron', title: 'Iron', description: 'Standard steam iron for clothes.', price: 60, collected: 0, suggestedAmounts: [40, 60], icon: Zap }
+  { id: 'towels', title: 'Bath Towel Set', description: 'A set of standard bath towels for the bathroom.', price: 60, collected: 0, suggestedAmounts: [10, 20, 40, 60], icon: Bath },
+  { id: 'knife', title: 'Kitchen Knife', description: 'A sharp chef\'s knife for daily cooking.', price: 70, collected: 0, suggestedAmounts: [10, 20, 40, 70], icon: ChefHat },
+  { id: 'pan', title: 'Frying Pan', description: 'A durable non-stick pan for cooking.', price: 60, collected: 0, suggestedAmounts: [10, 20, 40, 60], icon: Utensils },
+  { id: 'sheets', title: 'Bed Sheets', description: 'A standard set of sheets and pillowcases.', price: 80, collected: 0, suggestedAmounts: [10, 20, 50, 80], icon: Bed },
+  { id: 'blender', title: 'Hand Blender', description: 'For making soups and smoothies.', price: 50, collected: 0, suggestedAmounts: [10, 20, 30, 50], icon: Zap },
+  { id: 'glasses', title: 'Wine Glasses', description: 'A set of 6 glasses for wine or water.', price: 50, collected: 0, suggestedAmounts: [10, 20, 30, 50], icon: Wine },
+  { id: 'toolkit', title: 'Basic Tool Kit', description: 'Screwdrivers, hammer, and tape measure.', price: 70, collected: 0, suggestedAmounts: [10, 20, 40, 70], icon: Hammer },
+  { id: 'plates', title: 'Dinner Plates', description: 'A simple set of plates and bowls.', price: 90, collected: 0, suggestedAmounts: [10, 20, 50, 90], icon: Utensils },
+  { id: 'containers', title: 'Food Containers', description: 'Glass containers for storing leftovers.', price: 50, collected: 0, suggestedAmounts: [10, 20, 30, 50], icon: Box },
+  { id: 'cuttingboard', title: 'Cutting Board', description: 'A solid wooden board for chopping food.', price: 50, collected: 0, suggestedAmounts: [10, 20, 30, 50], icon: Utensils },
+  { id: 'grinder', title: 'Coffee Grinder', description: 'Small machine to grind coffee beans.', price: 50, collected: 0, suggestedAmounts: [10, 20, 30, 50], icon: Coffee },
+  { id: 'iron', title: 'Iron', description: 'Standard steam iron for clothes.', price: 60, collected: 0, suggestedAmounts: [10, 20, 40, 60], icon: Zap }
 ];
 
 export default function Registry() {
@@ -223,7 +223,7 @@ export default function Registry() {
 
           {/* OPTION 2: CASH FUND */}
           <div 
-             onClick={() => handleOpenPledge({ title: 'Cash Fund', description: t('registry.cashDesc'), suggestedAmounts: [50, 100, 200, 500] })}
+             onClick={() => handleOpenPledge({ title: 'Cash Fund', description: t('registry.cashDesc'), suggestedAmounts: [20, 50, 100] })}
              className="group bg-white/70 backdrop-blur-xl border border-white/50 p-8 md:p-12 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col items-center justify-center text-center items-center min-h-[300px] md:h-[450px] transform hover:-translate-y-2"
           >
             <div className="w-24 h-24 md:w-32 md:h-32 bg-emerald-100/50 rounded-full flex items-center justify-center mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-500 group-hover:bg-emerald-100">

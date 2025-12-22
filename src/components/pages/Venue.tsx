@@ -1,0 +1,95 @@
+import { useLanguage } from '../../contexts/LanguageContext';
+import { Button } from '../ui/button';
+import { MapPin, Church, Home } from 'lucide-react';
+import ceremonyImage from 'figma:asset/2c1a399487b0eaf24b4eb22a66fb37e1c381bf12.png';
+import receptionImage from 'figma:asset/cbe880ec8c3cdfbbf3a2b6dbf42c2851ff18806c.png';
+
+export default function Venue() {
+  const { language, t } = useLanguage();
+
+  return (
+    <section id="venue" className="py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl mb-4">{t('venue.title')}</h2>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Ceremony */}
+          <div className="group bg-white rounded-xl border border-neutral-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+            <div className="h-72 relative overflow-hidden">
+              <img
+                src={ceremonyImage}
+                alt="Basilique Notre-Dame de Fribourg"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+            </div>
+            <div className="p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Church className="w-5 h-5 text-neutral-700" />
+                <h3 className="text-2xl">{t('venue.ceremony')}</h3>
+              </div>
+              <h4 className="mb-2">Basilique Notre-Dame de Fribourg</h4>
+              <p className="text-neutral-600 mb-1">Rue de Morat 12</p>
+              <p className="text-neutral-600 mb-3">1700 Fribourg, Switzerland</p>
+              <p className="mb-3">{t('venue.ceremonyTime')}</p>
+              <p className="text-sm text-neutral-600 mb-4">{t('venue.ceremonyNote')}</p>
+              <Button
+                asChild
+                className="w-full bg-neutral-900 hover:bg-neutral-800"
+              >
+                <a
+                  href="https://share.google/duHH42SPUTkqCHJHI"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MapPin className="w-4 h-4 mr-2" />
+                  {t('venue.directions')}
+                </a>
+              </Button>
+            </div>
+          </div>
+
+          {/* Reception */}
+          <div className="group bg-white rounded-xl border border-neutral-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+            <div className="h-72 relative overflow-hidden">
+              <img
+                src={receptionImage}
+                alt="Guglerahof Farm"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+            </div>
+            <div className="p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Home className="w-5 h-5 text-neutral-700" />
+                <h3 className="text-2xl">{t('venue.reception')}</h3>
+              </div>
+              <h4 className="mb-2">
+                {language === 'en' ? 'Guglerahof Farm' : 'Ferme Guglerahof'}
+              </h4>
+              <p className="text-neutral-600 mb-1">Guglera 6</p>
+              <p className="text-neutral-600 mb-3">1735 Giffers, Switzerland</p>
+              <p className="mb-3">{t('venue.receptionTime')}</p>
+              <p className="text-sm text-neutral-600 mb-4">{t('venue.receptionNote')}</p>
+              <Button
+                asChild
+                className="w-full bg-neutral-900 hover:bg-neutral-800"
+              >
+                <a
+                  href="https://share.google/R6ePxtpQng1AHzl6D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MapPin className="w-4 h-4 mr-2" />
+                  {t('venue.directions')}
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

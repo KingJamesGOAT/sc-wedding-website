@@ -56,7 +56,7 @@ export default function App() {
       <div className="min-h-screen bg-white">
         <Header activeSection={activeSection} onNavigate={handleNavigate} />
         
-        <main className="pt-20">
+        <main>
           <Home />
           <Venue />
           <Details />

@@ -4,7 +4,7 @@ import Header from './components/Header';
 
 import Home from './components/pages/Home';
 import RSVP from './components/pages/RSVP';
-import RegistryWithContribution from './components/pages/RegistryWithContribution';
+import Registry from './components/pages/Registry';
 import Venue from './components/pages/Venue';
 import Details from './components/pages/Details';
 import Gallery from './components/pages/Gallery';
@@ -61,7 +61,7 @@ export default function App() {
           <Venue />
           <Details />
           <RSVP />
-          <RegistryWithContribution />
+          <Registry />
           <Gallery />
         </main>
 

@@ -156,6 +156,29 @@ const translations: Record<string, Record<Language, string>> = {
   },
   'contribute.copy': { en: 'Copy', fr: 'Copier' },
   'contribute.copied': { en: 'Copied!', fr: 'Copié !' },
+
+  // Registry Pledge Flow
+  'registry.pledgeBtn': { en: 'Contribute', fr: 'Contribuer' },
+  'registry.pledgeTitle': { en: 'Make a Contribution', fr: 'Faire un don' },
+  'registry.pledgeSubtitle': { en: 'Contributing towards: ', fr: 'Participation pour : ' },
+  'registry.nameLabel': { en: 'Your Name', fr: 'Votre Nom' },
+  'registry.emailLabel': { en: 'Your Email', fr: 'Votre Email' },
+  'registry.amountLabel': { en: 'Amount (CHF)', fr: 'Montant (CHF)' },
+  'registry.customAmount': { en: 'Custom Amount', fr: 'Montant libre' },
+  'registry.messageLabel': { en: 'Short Message (Optional)', fr: 'Petit message (Optionnel)' },
+  'registry.confirmBtn': { en: 'Confirm Pledge', fr: 'Confirmer la promesse' },
+  'registry.sending': { en: 'Processing...', fr: 'Traitement...' },
+  'registry.thankYou': { en: 'Thank You, {name}!', fr: 'Merci, {name} !' },
+  'registry.paymentInstructions': { 
+    en: 'To finalize your gift, please send the amount via Twint or Bank Transfer using the reference code below.', 
+    fr: "Pour finaliser, merci d'envoyer le montant via Twint ou virement avec le code ci-dessous." 
+  },
+  'registry.refCode': { 
+    en: 'Reference Code (Please add this to your payment message)', 
+    fr: 'Code de référence (À mettre dans le message de paiement)' 
+  },
+  'registry.copy': { en: 'Copy', fr: 'Copier' },
+  'registry.copied': { en: 'Copied!', fr: 'Copié !' },
   
   // Footer
   'footer.contact': { en: 'Contact Us', fr: 'Nous contacter' },

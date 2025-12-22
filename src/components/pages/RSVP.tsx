@@ -168,8 +168,9 @@ export default function RSVP() {
           <div className="mt-6 bg-amber-50 border border-amber-200 p-4 rounded-xl inline-block text-left relative">
              <div className="flex gap-3">
                  <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                 <p className="text-sm text-amber-900 font-bold">
-                   {t('rsvp.foodNote')}
+                 <p className="text-sm text-amber-900">
+                   {t('rsvp.foodNote.intro')}
+                   <strong>{t('rsvp.foodNote.bold')}</strong>
                  </p>
              </div>
           </div>
@@ -300,8 +301,10 @@ export default function RSVP() {
                         <Alert className="bg-amber-100 border-amber-300">
                           <AlertTriangle className="h-4 w-4 text-amber-600" />
                           <AlertTitle className="text-amber-800 font-semibold ml-2">{t('rsvp.aperoWarningTitle')}</AlertTitle>
-                          <AlertDescription className="text-amber-700 ml-2 mt-1 font-bold">
-                            {t('rsvp.aperoWarning')}
+                          <AlertDescription className="text-amber-700 ml-2 mt-1">
+                            {t('rsvp.aperoWarning.intro')}
+                            <strong>{t('rsvp.aperoWarning.bold')}</strong>
+                            {t('rsvp.aperoWarning.outro')}
                           </AlertDescription>
                         </Alert>
 

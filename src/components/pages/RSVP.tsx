@@ -121,9 +121,7 @@ export default function RSVP() {
        // If not dinner guest, ensure dinnerAttendance is empty/handled
        if (!isDinnerGuest) {
           finalData.dinnerAttendance = '';
-          // Also clear dietary if logic says standard guests don't see it (User requirement: "Hide Dietary Restrictions question (since Apero food is labeled).")
-          finalData.dietaryType = '';
-          finalData.dietary = '';
+          // We no longer clear dietary here, as it is now available for everyone.
        }
 
        if (finalData.aperoContribution === 'no') {
@@ -342,37 +340,35 @@ export default function RSVP() {
                  </div>
                )}
 
-              {/* DIETARY - ONLY FOR DINNER GUESTS */}
-              {isDinnerGuest && (
-                  <div className="space-y-4 pt-4 border-t border-neutral-100">
-                    <Label className="text-lg font-medium block">{t('rsvp.dietary')}</Label>
-                    <Select value={formData.dietaryType} onValueChange={(value: string) => setFormData({ ...formData, dietaryType: value })}>
-                      <SelectTrigger className="w-full" disabled={isSubmitting}>
-                        <SelectValue placeholder="Select preference" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="none">{t('rsvp.dietary.none')}</SelectItem>
-                        <SelectItem value="vegetarian">{t('rsvp.dietary.vegetarian')}</SelectItem>
-                        <SelectItem value="vegan">{t('rsvp.dietary.vegan')}</SelectItem>
-                        <SelectItem value="other">{t('rsvp.dietary.other')}</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    
-                    {(formData.dietaryType === 'other' || formData.dietaryType === 'vegetarian' || formData.dietaryType === 'vegan') && (
-                      <div className="pt-2 animate-in fade-in duration-300">
-                        <Label htmlFor="dietary" className="mb-2 block">{t('rsvp.dietaryDetails')}</Label>
-                        <Textarea
-                          id="dietary"
-                          placeholder={t('rsvp.dietaryPlaceholder')}
-                          value={formData.dietary}
-                          onChange={(e) => setFormData({ ...formData, dietary: e.target.value })}
-                          className="w-full"
-                          disabled={isSubmitting}
-                        />
-                      </div>
-                    )}
+               {/* DIETARY - Visible for ALL guests */}
+              <div className="space-y-4 pt-4 border-t border-neutral-100">
+                <Label className="text-lg font-medium block">{t('rsvp.dietary')}</Label>
+                <Select value={formData.dietaryType} onValueChange={(value: string) => setFormData({ ...formData, dietaryType: value })}>
+                  <SelectTrigger className="w-full" disabled={isSubmitting}>
+                    <SelectValue placeholder="Select preference" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">{t('rsvp.dietary.none')}</SelectItem>
+                    <SelectItem value="vegetarian">{t('rsvp.dietary.vegetarian')}</SelectItem>
+                    <SelectItem value="vegan">{t('rsvp.dietary.vegan')}</SelectItem>
+                    <SelectItem value="other">{t('rsvp.dietary.other')}</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                {(formData.dietaryType === 'other' || formData.dietaryType === 'vegetarian' || formData.dietaryType === 'vegan') && (
+                  <div className="pt-2 animate-in fade-in duration-300">
+                    <Label htmlFor="dietary" className="mb-2 block">{t('rsvp.dietaryDetails')}</Label>
+                    <Textarea
+                      id="dietary"
+                      placeholder={t('rsvp.dietaryPlaceholder')}
+                      value={formData.dietary}
+                      onChange={(e) => setFormData({ ...formData, dietary: e.target.value })}
+                      className="w-full"
+                      disabled={isSubmitting}
+                    />
                   </div>
-              )}
+                )}
+              </div>
 
               {/* APERO SECTION */}
               <div className="bg-neutral-50 p-6 rounded-xl border border-neutral-100 space-y-6">

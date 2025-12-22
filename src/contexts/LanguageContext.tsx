@@ -185,6 +185,9 @@ const translations: Record<string, Record<Language, string>> = {
   },
   'registry.copy': { en: 'Copy', fr: 'Copier' },
   'registry.copied': { en: 'Copied!', fr: 'Copié !' },
+  'registry.fullyFunded': { en: 'Fully Contributed', fr: 'Entièrement financé' },
+  'registry.goal': { en: 'Goal', fr: 'Objectif' },
+  'registry.raised': { en: 'Raised', fr: 'Récolté' },
   
   // Footer
   'footer.contact': { en: 'Contact Us', fr: 'Nous contacter' },

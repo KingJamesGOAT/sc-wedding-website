@@ -4,29 +4,34 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
+import { Progress } from '../ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '../ui/dialog';
-import { Gift, CreditCard, Smartphone, Building2, Copy, Check, QrCode, Loader2, DollarSign, ShoppingBag } from 'lucide-react';
+import { 
+  Gift, CreditCard, Smartphone, Building2, Copy, Check, QrCode, Loader2, 
+  DollarSign, ShoppingBag, ChefHat, Zap, Utensils, Bed, Coffee, Wine, 
+  Plane, Flower2, Palette, Speaker, Home
+} from 'lucide-react';
 import { toast } from 'sonner';
 
-// Real data with researched CHF prices
+// Real data with prices and simulated collection status
 const GIFTS = [
-  { id: 'mixer', title: 'KitchenAid Artisan Mixer', description: 'Classic stand mixer for baking.', suggestedAmounts: [50, 100, 250], image: 'kitchen mixer' },
-  { id: 'dyson', title: 'Dyson V15 Detect', description: 'Cordless vacuum cleaner.', suggestedAmounts: [50, 100, 200], image: 'vacuum cleaner' }, // Placeholder image mapping
-  { id: 'lecreuset', title: 'Le Creuset Casserole 24cm', description: 'Cast iron signature pot.', suggestedAmounts: [50, 100, 240], image: 'cookware pots' },
-  { id: 'roborock', title: 'Roborock S8', description: 'Robot vacuum & mop.', suggestedAmounts: [50, 100, 200], image: 'robot vacuum' }, // Placeholder
-  { id: 'sonos', title: 'Sonos Era 100', description: 'Smart speaker for our living room.', suggestedAmounts: [50, 90, 180], image: 'speaker' }, // Placeholder
-  { id: 'linens', title: 'Luxury Bed Linens', description: 'High-thread-count sheets.', suggestedAmounts: [50, 100, 200], image: 'luxury bedding' },
-  { id: 'dinner', title: 'Romantic Dinner', description: 'A special dinner on our honeymoon.', suggestedAmounts: [50, 100, 200], image: 'beach dinner romantic' },
-  { id: 'spa', title: 'Couples Spa Day', description: 'Massage and relaxation.', suggestedAmounts: [60, 120, 250], image: 'spa treatment' }, // Placeholder
-  { id: 'coffee', title: 'Coffee Machine', description: 'Automatic espresso machine.', suggestedAmounts: [50, 100, 300], image: 'coffee machine' }, // Placeholder
-  { id: 'wine', title: 'Wine Subscription', description: 'Monthly wine delivery.', suggestedAmounts: [40, 80, 150], image: 'wine glasses' }, // Placeholder
-  { id: 'plants', title: 'Indoor Plants', description: 'Greenery for our home.', suggestedAmounts: [30, 60, 100], image: 'plant pot' }, // Placeholder
-  { id: 'art', title: 'Wall Art', description: 'Decor for the living room.', suggestedAmounts: [50, 100, 200], image: 'art piece' }, // Placeholder
-  { id: 'flight', title: 'Flight Upgrade', description: 'Upgrade for honeymoon flights.', suggestedAmounts: [50, 150, 300], image: 'airplane window' } // Placeholder
+  { id: 'mixer', title: 'KitchenAid Artisan Mixer', description: 'Classic stand mixer for baking.', price: 650, collected: 650, suggestedAmounts: [50, 100, 250], icon: ChefHat },
+  { id: 'dyson', title: 'Dyson V15 Detect', description: 'Cordless vacuum cleaner.', price: 799, collected: 200, suggestedAmounts: [50, 100, 200], icon: Zap },
+  { id: 'lecreuset', title: 'Le Creuset Casserole 24cm', description: 'Cast iron signature pot.', price: 340, collected: 0, suggestedAmounts: [50, 100, 240], icon: Utensils },
+  { id: 'roborock', title: 'Roborock S8', description: 'Robot vacuum & mop.', price: 600, collected: 150, suggestedAmounts: [50, 100, 200], icon: Home },
+  { id: 'sonos', title: 'Sonos Era 100', description: 'Smart speaker for our living room.', price: 250, collected: 250, suggestedAmounts: [50, 90, 180], icon: Speaker },
+  { id: 'linens', title: 'Luxury Bed Linens', description: 'High-thread-count sheets.', price: 300, collected: 50, suggestedAmounts: [50, 100, 200], icon: Bed },
+  { id: 'dinner', title: 'Romantic Dinner', description: 'A special dinner on our honeymoon.', price: 250, collected: 0, suggestedAmounts: [50, 100, 200], icon: Utensils },
+  { id: 'spa', title: 'Couples Spa Day', description: 'Massage and relaxation.', price: 400, collected: 120, suggestedAmounts: [60, 120, 250], icon: Flower2 },
+  { id: 'coffee', title: 'Coffee Machine', description: 'Automatic espresso machine.', price: 800, collected: 0, suggestedAmounts: [50, 100, 300], icon: Coffee },
+  { id: 'wine', title: 'Wine Subscription', description: 'Monthly wine delivery.', price: 300, collected: 100, suggestedAmounts: [40, 80, 150], icon: Wine },
+  { id: 'plants', title: 'Indoor Plants', description: 'Greenery for our home.', price: 150, collected: 150, suggestedAmounts: [30, 60, 100], icon: Flower2 },
+  { id: 'art', title: 'Wall Art', description: 'Decor for the living room.', price: 500, collected: 0, suggestedAmounts: [50, 100, 200], icon: Palette },
+  { id: 'flight', title: 'Flight Upgrade', description: 'Upgrade for honeymoon flights.', price: 1000, collected: 300, suggestedAmounts: [50, 150, 300], icon: Plane }
 ];
 
 export default function Registry() {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   
   // State for Pledge Flow
   const [selectedGift, setSelectedGift] = useState<any>(null);
@@ -51,7 +56,6 @@ export default function Registry() {
     setPledgeStep('form');
     setFormData({ name: '', email: '', amount: '', message: '' });
     setAmountType('suggested');
-    // Keep browse modal open if it was open, or just open pledge dialog logic handled by conditional rendering
   };
 
   const generateRefCode = () => {
@@ -103,50 +107,75 @@ export default function Registry() {
   };
 
   return (
-    <section id="registry" className="py-20 px-4 sm:px-6 lg:px-8 bg-neutral-50 min-h-[600px]">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl mb-4">{t('registry.title')}</h2>
+    <section id="registry" className="py-20 px-4 sm:px-6 lg:px-8 bg-[url('https://images.unsplash.com/photo-1520013577341-a20c35ef294f?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center min-h-[800px] flex items-center">
+      <div className="max-w-6xl mx-auto w-full">
+        <div className="text-center mb-16 bg-white/80 backdrop-blur-md p-8 rounded-3xl inline-block mx-auto shadow-sm">
+          <h2 className="text-4xl mb-4 text-neutral-900">{t('registry.title')}</h2>
           <p className="text-neutral-600 max-w-2xl mx-auto">{t('registry.intro')}</p>
         </div>
 
         {/* MAIN LAYOUT: Clickable Containers */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
           
           {/* OPTION 1: BROWSE GIFTS */}
           <Dialog open={isBrowseOpen} onOpenChange={setIsBrowseOpen}>
             <DialogTrigger asChild>
-              <div className="bg-white rounded-xl border border-neutral-200 p-10 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col items-center justify-center text-center h-80">
-                <div className="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <ShoppingBag className="w-10 h-10 text-rose-400" />
+              <div className="group bg-white/70 backdrop-blur-xl border border-white/50 p-12 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col items-center justify-center text-center items-center h-[450px] transform hover:-translate-y-2">
+                <div className="w-32 h-32 bg-rose-100/50 rounded-full flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 group-hover:bg-rose-100">
+                  <ShoppingBag className="w-16 h-16 text-rose-500" />
                 </div>
-                <h3 className="text-2xl font-light mb-2">{t('registry.browseBtn')}</h3>
-                <p className="text-neutral-500 text-sm">Discover items we'd love for our home.</p>
+                <h3 className="text-3xl font-light mb-4 text-neutral-900">{t('registry.browseBtn')}</h3>
+                <p className="text-neutral-600 text-lg max-w-xs">{t('registry.browseBtn') === 'Browse Gift Wishlist' ? 'Explore our curated list of items for our new home.' : 'Découvrez notre liste de cadeaux pour notre future maison.'}</p>
               </div>
             </DialogTrigger>
             
-            <DialogContent className="max-w-4xl max-h-[85vh] overflow-hidden flex flex-col">
-              <DialogHeader>
-                <DialogTitle className="text-2xl text-center pb-4">{t('registry.browseBtn')}</DialogTitle>
+            <DialogContent className="max-w-5xl max-h-[90vh] flex flex-col p-6 bg-neutral-50/95 backdrop-blur-3xl border-neutral-200">
+              <DialogHeader className="pb-4 border-b border-neutral-200/50 mb-4">
+                <DialogTitle className="text-3xl font-light text-center">{t('registry.browseBtn')}</DialogTitle>
               </DialogHeader>
-              <div className="overflow-y-auto px-1 py-4 flex-1">
+              <div className="overflow-y-auto px-2 py-2 flex-1 scrollbar-hide">
                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                   {GIFTS.map((gift) => (
-                     <div key={gift.id} className="bg-neutral-50 rounded-lg p-4 flex flex-col items-center text-center border border-neutral-100 hover:border-neutral-300 transition-colors">
-                        <div className="w-24 h-24 bg-white rounded-lg flex items-center justify-center mb-3">
-                           <Gift className="w-10 h-10 text-neutral-300" />
-                        </div>
-                        <h4 className="font-medium mb-1">{gift.title}</h4>
-                        <p className="text-xs text-neutral-500 mb-4 line-clamp-2">{gift.description}</p>
-                        <Button
-                          size="sm"
-                          className="mt-auto w-full bg-neutral-900 hover:bg-neutral-800"
-                          onClick={() => handleOpenPledge(gift)}
-                        >
-                          {t('registry.pledgeBtn')}
-                        </Button>
-                     </div>
-                   ))}
+                   {GIFTS.map((gift) => {
+                     const isFullyFunded = gift.collected >= gift.price;
+                     const percent = Math.min((gift.collected / gift.price) * 100, 100);
+                     const Icon = gift.icon;
+
+                     return (
+                       <div key={gift.id} className="bg-white rounded-2xl p-6 flex flex-col border border-neutral-100 hover:border-neutral-300 hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
+                          {isFullyFunded && (
+                            <div className="absolute top-4 right-4 bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-sm z-10">
+                              <Check className="w-3 h-3" /> {t('registry.fullyFunded')}
+                            </div>
+                          )}
+                          
+                          <div className="w-16 h-16 bg-neutral-50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
+                             <Icon className={`w-8 h-8 ${isFullyFunded ? 'text-green-500' : 'text-neutral-600'}`} />
+                          </div>
+                          
+                          <div className="flex-1">
+                            <h4 className="font-medium text-lg mb-1 leading-tight">{gift.title}</h4>
+                            <p className="text-sm text-neutral-500 mb-4 line-clamp-2">{gift.description}</p>
+                          </div>
+
+                          <div className="mt-4 space-y-2">
+                             <div className="flex justify-between text-xs font-medium text-neutral-900">
+                                <span>{isFullyFunded ? t('registry.fullyFunded') : `${t('registry.raised')} CHF ${gift.collected}`}</span>
+                                <span>{t('registry.goal')} CHF {gift.price}</span>
+                             </div>
+                             <Progress value={percent} className={`h-2 ${isFullyFunded ? 'bg-green-100' : 'bg-neutral-100'}`} indicatorClassName={isFullyFunded ? 'bg-green-500' : 'bg-neutral-900'} />
+                          </div>
+
+                          <Button
+                            size="sm"
+                            disabled={isFullyFunded}
+                            className={`mt-4 w-full ${isFullyFunded ? 'bg-green-50 text-green-700 hover:bg-green-100 opacity-100' : 'bg-neutral-900 hover:bg-neutral-800'}`}
+                            onClick={() => !isFullyFunded && handleOpenPledge(gift)}
+                          >
+                            {isFullyFunded ? t('registry.fullyFunded') : t('registry.pledgeBtn')}
+                          </Button>
+                       </div>
+                     );
+                   })}
                  </div>
               </div>
             </DialogContent>
@@ -155,13 +184,13 @@ export default function Registry() {
           {/* OPTION 2: CASH FUND */}
           <div 
              onClick={() => handleOpenPledge({ title: 'Cash Fund', description: t('registry.cashDesc'), suggestedAmounts: [50, 100, 200, 500] })}
-             className="bg-white rounded-xl border border-neutral-200 p-10 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col items-center justify-center text-center h-80"
+             className="group bg-white/70 backdrop-blur-xl border border-white/50 p-12 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col items-center justify-center text-center items-center h-[450px] transform hover:-translate-y-2"
           >
-            <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-               <DollarSign className="w-10 h-10 text-emerald-500" />
+            <div className="w-32 h-32 bg-emerald-100/50 rounded-full flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 group-hover:bg-emerald-100">
+               <DollarSign className="w-16 h-16 text-emerald-600" />
             </div>
-            <h3 className="text-2xl font-light mb-2">{t('registry.cashBtn')}</h3>
-            <p className="text-neutral-500 text-sm">{t('registry.cashDesc')}</p>
+            <h3 className="text-3xl font-light mb-4 text-neutral-900">{t('registry.cashBtn')}</h3>
+            <p className="text-neutral-600 text-lg max-w-xs">{t('registry.cashDesc')}</p>
           </div>
 
         </div>

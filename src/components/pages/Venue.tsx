@@ -94,7 +94,7 @@ export default function Venue() {
       </div>
 
       <Dialog open={!!activeMap} onOpenChange={(open: boolean) => !open && setActiveMap(null)}>
-        <DialogContent className="max-w-4xl w-[95vw] h-[80vh] flex flex-col p-0 overflow-hidden bg-white">
+        <DialogContent className="md:max-w-6xl lg:max-w-7xl w-[95vw] h-[80vh] flex flex-col p-0 overflow-hidden bg-white">
           <DialogHeader className="p-4 bg-white z-10 border-b">
             <DialogTitle>{activeMap && maps[activeMap].title}</DialogTitle>
           </DialogHeader>

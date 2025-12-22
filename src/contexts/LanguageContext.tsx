@@ -116,6 +116,7 @@ const translations: Record<string, Record<Language, string>> = {
   'rsvp.aperoChoiceCustom': { en: 'Something else (My own choice)', fr: 'Autre chose (Mon propre choix)' },
   'rsvp.foodNote.intro': { en: 'Please use this form to RSVP for the wedding. ', fr: 'Utilisez ce formulaire pour répondre à l\'invitation. ' },
   'rsvp.foodNote.bold': { en: 'You can also optionally sign up to bring something for the Apero.', fr: 'Vous pouvez aussi, si vous le souhaitez, vous inscrire pour apporter quelque chose à l\'Apéro.' },
+  'rsvp.taken': { en: '(Already Taken)', fr: '(Déjà pris)' },
   
   // Registry
   'registry.title': { en: 'Gifts', fr: 'Cadeaux' },

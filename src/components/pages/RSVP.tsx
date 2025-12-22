@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -65,6 +65,23 @@ export default function RSVP() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [takenItems, setTakenItems] = useState<string[]>([]);
+
+  // Fetch taken items on mount
+  useEffect(() => {
+    const fetchTakenItems = async () => {
+      try {
+         const response = await fetch('https://script.google.com/macros/s/AKfycbz06IfaoPFh1kpwyfANLVt4YUPDBa6jODhf9AEufCUcAVWL_WVJNCtbscP5eTuakLHo/exec');
+         const data = await response.json();
+         if (data && data.takenAperoItems) {
+            setTakenItems(data.takenAperoItems);
+         }
+      } catch (error) {
+         console.error("Failed to fetch taken items", error);
+      }
+    };
+    fetchTakenItems();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -349,11 +366,15 @@ export default function RSVP() {
                                     <SelectContent className="max-h-[300px]">
                                        {formData.aperoType === 'Savory' ? (
                                           SAVORY_OPTIONS.map((opt) => (
-                                            <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                                            <SelectItem key={opt} value={opt} disabled={takenItems.includes(opt)}>
+                                              {opt} {takenItems.includes(opt) ? t('rsvp.taken') : ''}
+                                            </SelectItem>
                                           ))
                                        ) : (
                                           SWEET_OPTIONS.map((opt) => (
-                                            <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                                            <SelectItem key={opt} value={opt} disabled={takenItems.includes(opt)}>
+                                              {opt} {takenItems.includes(opt) ? t('rsvp.taken') : ''}
+                                            </SelectItem>
                                           ))
                                        )}
                                        <SelectItem value="custom" className="font-bold border-t border-neutral-100 mt-1 pt-1">

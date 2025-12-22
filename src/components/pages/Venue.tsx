@@ -1,8 +1,8 @@
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Button } from '../ui/button';
 import { MapPin, Church, Home } from 'lucide-react';
-import ceremonyImage from 'figma:asset/2c1a399487b0eaf24b4eb22a66fb37e1c381bf12.png';
-import receptionImage from 'figma:asset/cbe880ec8c3cdfbbf3a2b6dbf42c2851ff18806c.png';
+import ceremonyImage from '../../assets/2c1a399487b0eaf24b4eb22a66fb37e1c381bf12.png';
+import receptionImage from '../../assets/cbe880ec8c3cdfbbf3a2b6dbf42c2851ff18806c.png';
 
 export default function Venue() {
   const { language, t } = useLanguage();

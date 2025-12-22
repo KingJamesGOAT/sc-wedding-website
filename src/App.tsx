@@ -6,6 +6,7 @@ import Home from './components/pages/Home';
 import RSVP from './components/pages/RSVP';
 import RegistryWithContribution from './components/pages/RegistryWithContribution';
 import Venue from './components/pages/Venue';
+import Details from './components/pages/Details';
 import Gallery from './components/pages/Gallery';
 import MetaTags from './components/MetaTags';
 import { Toaster } from './components/ui/sonner';
@@ -30,7 +31,7 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'venue', 'rsvp', 'registry', 'gallery'];
+      const sections = ['home', 'venue', 'details', 'rsvp', 'registry', 'gallery'];
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
@@ -58,6 +59,7 @@ export default function App() {
         <main className="pt-20">
           <Home />
           <Venue />
+          <Details />
           <RSVP />
           <RegistryWithContribution />
           <Gallery />

@@ -24,6 +24,7 @@ export default function Header({ activeSection, onNavigate }: HeaderProps) {
   const navItems = [
     { key: 'home', label: t('nav.home') },
     { key: 'venue', label: t('nav.venue') },
+    { key: 'details', label: t('nav.details') },
     { key: 'rsvp', label: t('nav.rsvp') },
     { key: 'registry', label: t('nav.registry') },
     { key: 'gallery', label: t('nav.gallery') },

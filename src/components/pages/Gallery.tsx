@@ -1,27 +1,45 @@
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Camera } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Gallery() {
   const { t } = useLanguage();
 
   return (
-    <section id="gallery" className="py-20 px-4 sm:px-6 lg:px-8 bg-neutral-50">
+    <section id="gallery" className="py-20 px-4 sm:px-6 lg:px-8 bg-neutral-900 text-white overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <Camera className="w-16 h-16 mx-auto mb-4 text-neutral-400" />
-          <h2 className="text-4xl mb-4">{t('gallery.title')}</h2>
-          <p className="text-neutral-600 max-w-2xl mx-auto">{t('gallery.comingSoon')}</p>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl font-serif mb-4 text-white">
+            {t('gallery.title')}
+          </h2>
+          <p className="text-neutral-400 max-w-2xl mx-auto text-lg">
+            {t('gallery.subtitle')}
+          </p>
+        </motion.div>
 
-        {/* Placeholder Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[...Array(8)].map((_, index) => (
-            <div
-              key={index}
-              className="aspect-square bg-neutral-100 rounded-lg border-2 border-dashed border-neutral-300 flex items-center justify-center"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className="aspect-[4/5] bg-neutral-800/50 rounded-xl border border-neutral-700/50 flex flex-col items-center justify-center group hover:bg-neutral-800 transition-colors"
             >
-              <Camera className="w-8 h-8 text-neutral-300" />
-            </div>
+              <div className="w-16 h-16 rounded-full bg-neutral-700/50 flex items-center justify-center mb-4 group-hover:bg-neutral-700 transition-colors">
+                <Camera className="w-8 h-8 text-neutral-500 group-hover:text-neutral-400" />
+              </div>
+              <span className="text-neutral-500 font-medium text-sm tracking-wide uppercase group-hover:text-neutral-400">
+                {t('gallery.comingSoon')}
+              </span>
+            </motion.div>
           ))}
         </div>
       </div>

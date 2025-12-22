@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Header from './components/Header';
-import Footer from './components/Footer';
+
 import Home from './components/pages/Home';
 import RSVP from './components/pages/RSVP';
 import RegistryWithContribution from './components/pages/RegistryWithContribution';
@@ -65,7 +65,7 @@ export default function App() {
           <Gallery />
         </main>
 
-        <Footer />
+
         <Toaster />
       </div>
     </LanguageProvider>

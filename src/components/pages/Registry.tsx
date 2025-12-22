@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -7,14 +7,14 @@ import { Textarea } from '../ui/textarea';
 import { Progress } from '../ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '../ui/dialog';
 import { 
-  Gift, CreditCard, Smartphone, Building2, Copy, Check, QrCode, Loader2, 
+  Gift, CreditCard, Smartphone, Building2, Copy, Check, Loader2, 
   DollarSign, ShoppingBag, ChefHat, Zap, Utensils, Bed, Coffee, Wine, 
   Plane, Flower2, Palette, Speaker, Home, Hammer, Bath, Scissors, Box
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 // Real data with realistic prices and 0 collected (fresh start)
-const GIFTS = [
+const INITIAL_GIFTS = [
   { id: 'towels', title: 'Bath Towel Set', description: 'A set of standard bath towels for the bathroom.', price: 60, collected: 0, suggestedAmounts: [40, 60], icon: Bath },
   { id: 'knife', title: 'Kitchen Knife', description: 'A sharp chef\'s knife for daily cooking.', price: 70, collected: 0, suggestedAmounts: [40, 70], icon: ChefHat },
   { id: 'pan', title: 'Frying Pan', description: 'A durable non-stick pan for cooking.', price: 60, collected: 0, suggestedAmounts: [40, 60], icon: Utensils },
@@ -32,6 +32,9 @@ const GIFTS = [
 export default function Registry() {
   const { t } = useLanguage();
   
+  // State for Gift Data
+  const [gifts, setGifts] = useState(INITIAL_GIFTS);
+
   // State for Pledge Flow
   const [selectedGift, setSelectedGift] = useState<any>(null);
   const [pledgeStep, setPledgeStep] = useState<'form' | 'success'>('form');
@@ -49,6 +52,33 @@ export default function Registry() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [referenceCode, setReferenceCode] = useState('');
+
+  // Fetch current totals from Google Sheet
+  useEffect(() => {
+    const fetchTotals = async () => {
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbz06IfaoPFh1kpwyfANLVt4YUPDBa6jODhf9AEufCUcAVWL_WVJNCtbscP5eTuakLHo/exec');
+        const data = await response.json();
+        
+        if (data && data.items) {
+          setGifts(prevGifts => prevGifts.map(gift => {
+             const collected = data.items[gift.title] || 0;
+             return { ...gift, collected };
+          }));
+        }
+      } catch (error) {
+        console.error("Failed to fetch registry totals", error);
+      }
+    };
+    
+    // Fetch immediately
+    fetchTotals();
+    
+    // Optional: Fetch on open browse
+    if (isBrowseOpen) {
+      fetchTotals();
+    }
+  }, [isBrowseOpen]);
 
   const handleOpenPledge = (gift: any) => {
     setSelectedGift(gift);
@@ -90,6 +120,17 @@ export default function Registry() {
           message: `Ref Code: ${code} | User Message: ${formData.message}`
         }),
       });
+
+      // Optimistic UI Update: Immediately update local state
+      const pledgedAmount = parseFloat(formData.amount);
+      if (!isNaN(pledgedAmount)) {
+          setGifts(prevGifts => prevGifts.map(gift => {
+              if (gift.id === selectedGift.id) {
+                  return { ...gift, collected: gift.collected + pledgedAmount };
+              }
+              return gift;
+          }));
+      }
 
       setPledgeStep('success');
     } catch (error) {
@@ -134,7 +175,7 @@ export default function Registry() {
               </DialogHeader>
               <div className="overflow-y-auto px-2 py-2 flex-1 scrollbar-hide">
                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                   {GIFTS.map((gift) => {
+                   {gifts.map((gift) => {
                      const isFullyFunded = gift.collected >= gift.price;
                      const percent = Math.min((gift.collected / gift.price) * 100, 100);
                      const Icon = gift.icon;
@@ -195,7 +236,7 @@ export default function Registry() {
         </div>
 
         {/* PLEDGE DIALOG (Handles both flows) */}
-        <Dialog open={!!selectedGift} onOpenChange={(open) => !open && setSelectedGift(null)}>
+        <Dialog open={!!selectedGift} onOpenChange={(open: boolean) => !open && setSelectedGift(null)}>
           <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
             
             {/* STATE 1: FORM */}
@@ -334,18 +375,13 @@ export default function Registry() {
                           </div>
                           <div className="flex-1">
                              <h4 className="font-medium mb-1">Twint</h4>
-                             <div className="flex flex-col sm:flex-row gap-4 mb-2">
-                                <div className="w-24 h-24 bg-neutral-100 rounded flex items-center justify-center text-xs text-neutral-400">
-                                   <QrCode className="h-8 w-8 opacity-20" />
-                                </div>
-                                <div className="flex flex-col justify-center">
-                                   <span className="text-xs text-neutral-500">Send to:</span>
-                                   <div className="flex items-center gap-2">
-                                      <span className="font-mono text-sm">+41 78 635 03 07</span>
-                                      <button onClick={() => copyToClipboard('+41786350307')} className="p-1 hover:bg-neutral-100 rounded">
-                                         <Copy className="h-3 w-3 text-neutral-400" />
-                                      </button>
-                                   </div>
+                             <div className="flex flex-col justify-center mt-1">
+                                <span className="text-xs text-neutral-500">Send to:</span>
+                                <div className="flex items-center gap-2">
+                                   <span className="font-mono text-sm">+41 78 635 03 07</span>
+                                   <button onClick={() => copyToClipboard('+41786350307')} className="p-1 hover:bg-neutral-100 rounded">
+                                      <Copy className="h-3 w-3 text-neutral-400" />
+                                   </button>
                                 </div>
                              </div>
                           </div>
@@ -375,9 +411,7 @@ export default function Registry() {
                                 <div className="flex flex-col mt-2 pt-2 border-t border-dashed">
                                    <span className="text-xs text-neutral-500 mb-1">Account Holder</span>
                                    <span className="text-xs text-neutral-800 leading-tight">
-                                     Monsieur Steve Benjamin<br/>
-                                     Chemin En Craux 14<br/>
-                                     1030 Bussigny-près-Lausanne
+                                     Monsieur Steve Benjamin
                                    </span>
                                 </div>
                              </div>

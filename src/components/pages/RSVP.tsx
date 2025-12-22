@@ -57,15 +57,31 @@ export default function RSVP() {
     children: '0',
     dietaryType: 'none',
     dietary: '',
-    // New Apero Fields
+    // Dinner Field
+    dinnerAttendance: '', // 'yes' or 'no' (only for VIPs)
+    // Apero Fields
     aperoContribution: 'no',
     aperoType: '',
     aperoItem: '',
     aperoDetails: ''
   });
+  
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [takenItems, setTakenItems] = useState<string[]>([]);
+  const [isDinnerGuest, setIsDinnerGuest] = useState(false);
+
+  // Check for Magic Link (?invite=dinner)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('invite') === 'dinner') {
+      setIsDinnerGuest(true);
+      // Default dinner attendance to 'yes' if they are invited? Or leave empty?
+      // Let's leave it empty or default 'yes' as per user preference. 
+      // User didn't specify default, but standard UI pattern is empty or default.
+      // We'll initialize it as empty string above, user must select.
+    }
+  }, []);
 
   // Fetch taken items on mount
   useEffect(() => {
@@ -96,18 +112,29 @@ export default function RSVP() {
        finalData.children = '0';
        finalData.dietaryType = '';
        finalData.dietary = '';
+       finalData.dinnerAttendance = '';
        finalData.aperoContribution = 'no';
        finalData.aperoType = '';
        finalData.aperoItem = '';
        finalData.aperoDetails = '';
-    } else if (finalData.aperoContribution === 'no') {
-       finalData.aperoType = '';
-       finalData.aperoItem = '';
-       finalData.aperoDetails = '';
     } else {
-       // If they selected a preset item (not custom), ensure aperoDetails has a value for safety
-       if (finalData.aperoItem !== 'custom' && finalData.aperoItem !== '') {
-          finalData.aperoDetails = finalData.aperoItem; 
+       // If not dinner guest, ensure dinnerAttendance is empty/handled
+       if (!isDinnerGuest) {
+          finalData.dinnerAttendance = '';
+          // Also clear dietary if logic says standard guests don't see it (User requirement: "Hide Dietary Restrictions question (since Apero food is labeled).")
+          finalData.dietaryType = '';
+          finalData.dietary = '';
+       }
+
+       if (finalData.aperoContribution === 'no') {
+          finalData.aperoType = '';
+          finalData.aperoItem = '';
+          finalData.aperoDetails = '';
+       } else {
+          // If they selected a preset item (not custom), ensure aperoDetails has a value for safety
+          if (finalData.aperoItem !== 'custom' && finalData.aperoItem !== '') {
+             finalData.aperoDetails = finalData.aperoItem; 
+          }
        }
     }
 
@@ -128,6 +155,7 @@ export default function RSVP() {
           children: finalData.children,
           dietaryType: finalData.dietaryType,
           dietary: finalData.dietary,
+          dinnerAttendance: finalData.dinnerAttendance, // New Field
           aperoType: finalData.aperoType,
           aperoItem: finalData.aperoItem,
           aperoDetails: finalData.aperoDetails
@@ -136,7 +164,7 @@ export default function RSVP() {
 
       setSubmitted(true);
       
-      // Reset form after 3 seconds
+      // Reset form after 5 seconds
       setTimeout(() => {
         setFormData({ 
           attending: 'yes',
@@ -147,13 +175,14 @@ export default function RSVP() {
           children: '0', 
           dietaryType: 'none', 
           dietary: '',
+          dinnerAttendance: '',
           aperoContribution: 'no',
           aperoType: '',
           aperoItem: '',
           aperoDetails: ''
         });
         setSubmitted(false);
-      }, 5000); // 5 seconds to read success msg
+      }, 5000); 
     } catch (error) {
       console.error('Error submitting form:', error);
     } finally {
@@ -291,6 +320,59 @@ export default function RSVP() {
                   />
                 </div>
               </div>
+
+               {/* MAGIC LINK DINNER OPTION */}
+               {isDinnerGuest && (
+                 <div className="space-y-4 bg-rose-50 p-6 rounded-xl border border-rose-100 animate-in fade-in slide-in-from-top-2">
+                    <Label className="text-lg font-medium block text-rose-900">{t('rsvp.dinnerQuestion')}</Label>
+                    <RadioGroup 
+                      value={formData.dinnerAttendance} 
+                      onValueChange={(value: string) => setFormData({ ...formData, dinnerAttendance: value })}
+                      className="space-y-3"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <RadioGroupItem value="Yes" id="dinner-yes" className="border-rose-300" />
+                        <Label htmlFor="dinner-yes" className="cursor-pointer font-medium text-rose-800">{t('rsvp.dinnerYes')}</Label>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <RadioGroupItem value="No" id="dinner-no" className="border-rose-300" />
+                        <Label htmlFor="dinner-no" className="cursor-pointer font-medium text-rose-800">{t('rsvp.dinnerNo')}</Label>
+                      </div>
+                    </RadioGroup>
+                 </div>
+               )}
+
+              {/* DIETARY - ONLY FOR DINNER GUESTS */}
+              {isDinnerGuest && (
+                  <div className="space-y-4 pt-4 border-t border-neutral-100">
+                    <Label className="text-lg font-medium block">{t('rsvp.dietary')}</Label>
+                    <Select value={formData.dietaryType} onValueChange={(value: string) => setFormData({ ...formData, dietaryType: value })}>
+                      <SelectTrigger className="w-full" disabled={isSubmitting}>
+                        <SelectValue placeholder="Select preference" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="none">{t('rsvp.dietary.none')}</SelectItem>
+                        <SelectItem value="vegetarian">{t('rsvp.dietary.vegetarian')}</SelectItem>
+                        <SelectItem value="vegan">{t('rsvp.dietary.vegan')}</SelectItem>
+                        <SelectItem value="other">{t('rsvp.dietary.other')}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    
+                    {(formData.dietaryType === 'other' || formData.dietaryType === 'vegetarian' || formData.dietaryType === 'vegan') && (
+                      <div className="pt-2 animate-in fade-in duration-300">
+                        <Label htmlFor="dietary" className="mb-2 block">{t('rsvp.dietaryDetails')}</Label>
+                        <Textarea
+                          id="dietary"
+                          placeholder={t('rsvp.dietaryPlaceholder')}
+                          value={formData.dietary}
+                          onChange={(e) => setFormData({ ...formData, dietary: e.target.value })}
+                          className="w-full"
+                          disabled={isSubmitting}
+                        />
+                      </div>
+                    )}
+                  </div>
+              )}
 
               {/* APERO SECTION */}
               <div className="bg-neutral-50 p-6 rounded-xl border border-neutral-100 space-y-6">

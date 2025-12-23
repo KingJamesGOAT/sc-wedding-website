@@ -108,9 +108,12 @@ export default function Header({ activeSection, onNavigate }: HeaderProps) {
                 {navItems.map((item) => (
                   <button
                     key={item.key}
-                    onClick={() => {
-                      onNavigate(item.key);
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
                       setIsMenuOpen(false);
+                      // Small delay to allow menu to close/start closing before scrolling
+                      setTimeout(() => onNavigate(item.key), 100);
                     }}
                     className={`block w-full text-center px-4 py-4 text-sm uppercase tracking-widest transition-colors cursor-pointer ${
                       activeSection === item.key

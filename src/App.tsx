@@ -10,6 +10,7 @@ import Details from './components/pages/Details';
 import Gallery from './components/pages/Gallery';
 import MetaTags from './components/MetaTags';
 import { Toaster } from './components/ui/sonner';
+import FloralFrame from './components/ui/FloralFrame';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -52,8 +53,9 @@ export default function App() {
 
   return (
     <LanguageProvider>
-      <MetaTags />
+   <MetaTags />
       <div className="min-h-screen bg-white">
+        <FloralFrame currentSection={activeSection} />
         <Header activeSection={activeSection} onNavigate={handleNavigate} />
         
         <main>
